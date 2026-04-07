@@ -46,4 +46,27 @@ class Quiz {
       return true;
     }
   }
+
+filterQuestionsByDifficulty (difficulty){
+if (difficulty > 0 && difficulty < 4){
+
+let filteredQuestions = [];
+
+for (let i = 0; i < this.questions.length; i++) {
+
+if (this.questions[i].difficulty === difficulty) {
+  filteredQuestions.push(this.questions[i]);
+}
+}
+this.questions = filteredQuestions;
+}
+}
+averageDifficulty(){
+  
+  let total = 0;
+for (let i = 0; i < this.questions.length; i++) {
+  total += this.questions[i].difficulty;
+}
+return total / this.questions.length;
+}
 }
