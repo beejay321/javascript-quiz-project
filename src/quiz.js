@@ -17,18 +17,24 @@ class Quiz {
 
   // 3. moveToNextQuestion()
   moveToNextQuestion() {
-    this.currentQuestionIndex + 1;
+    return this.currentQuestionIndex++;
   }
 
   // 4. shuffleQuestions()
   shuffleQuestions() {
-    return;
+    const questions = this.questions;
+    for (let i = questions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+    return questions;
   }
 
   // 5. checkAnswer(answer)
   checkAnswer(answer) {
-    if (answer === true) {
-      this.correctAnswers + 1;
+    const currentQuestion = this.questions[this.currentQuestionIndex];
+    if (answer === currentQuestion.answer) {
+      this.correctAnswers++;
     }
   }
 
