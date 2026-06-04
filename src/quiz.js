@@ -46,4 +46,27 @@ class Quiz {
       return true;
     }
   }
+
+  // 7. filterQuestionsByDifficulty()
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty > 0 && difficulty < 4) {
+      //   return this.questions;
+      // } else {
+      const questionsByDifficulty = this.questions.filter((question) => {
+        if (question.difficulty === difficulty) {
+          return question;
+        }
+        this.questions = questionsByDifficulty;
+      });
+    }
+  }
+
+  //averageDifficulty
+  averageDifficulty() {
+    this.questions.reduce((question) => {
+      if (question.difficulty === difficulty) {
+        return question;
+      }
+    });
+  }
 }
