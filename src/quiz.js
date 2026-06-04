@@ -48,25 +48,45 @@ class Quiz {
   }
 
   // 7. filterQuestionsByDifficulty()
+  // filterQuestionsByDifficulty(difficulty) {
+  //   if (difficulty > 0 && difficulty < 4) {
+  //     //   return this.questions;
+  //     // } else {
+  //     const questionsByDifficulty = this.questions.filter((question) => {
+  //       if (question.difficulty === difficulty) {
+  //         return question;
+  //       }
+  //       this.questions = questionsByDifficulty;
+  //     });
+  //   }
+  // }
+
+  // //averageDifficulty
+  // averageDifficulty() {
+  //   this.questions.reduce((question) => {
+  //     if (question.difficulty === difficulty) {
+  //       return question;
+  //     }
+  //   });
+  // }
+
   filterQuestionsByDifficulty(difficulty) {
     if (difficulty > 0 && difficulty < 4) {
-      //   return this.questions;
-      // } else {
-      const questionsByDifficulty = this.questions.filter((question) => {
-        if (question.difficulty === difficulty) {
-          return question;
+      let filteredQuestions = [];
+
+      for (let i = 0; i < this.questions.length; i++) {
+        if (this.questions[i].difficulty === difficulty) {
+          filteredQuestions.push(this.questions[i]);
         }
-        this.questions = questionsByDifficulty;
-      });
+      }
+      this.questions = filteredQuestions;
     }
   }
-
-  //averageDifficulty
   averageDifficulty() {
-    this.questions.reduce((question) => {
-      if (question.difficulty === difficulty) {
-        return question;
-      }
-    });
+    let total = 0;
+    for (let i = 0; i < this.questions.length; i++) {
+      total += this.questions[i].difficulty;
+    }
+    return total / this.questions.length;
   }
 }
