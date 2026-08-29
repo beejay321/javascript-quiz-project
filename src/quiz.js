@@ -1,7 +1,4 @@
 class Quiz {
-  // YOUR CODE HERE:
-  //
-  // 1. constructor (questions, timeLimit, timeRemaining)
   constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions;
     this.timeLimit = timeLimit;
@@ -10,83 +7,56 @@ class Quiz {
     this.currentQuestionIndex = 0;
   }
 
-  // 2. getQuestion()
   getQuestion() {
     return this.questions[this.currentQuestionIndex];
   }
 
-  // 3. moveToNextQuestion()
   moveToNextQuestion() {
-    return this.currentQuestionIndex++;
+    this.currentQuestionIndex += 1;
   }
 
-  // 4. shuffleQuestions()
   shuffleQuestions() {
-    const questions = this.questions;
-    for (let i = questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [questions[i], questions[j]] = [questions[j], questions[i]];
+    for (let i = this.questions.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+
+      [this.questions[i], this.questions[randomIndex]] = [
+        this.questions[randomIndex],
+        this.questions[i],
+      ];
     }
-    return questions;
   }
 
-  // 5. checkAnswer(answer)
   checkAnswer(answer) {
-    const currentQuestion = this.questions[this.currentQuestionIndex];
+    const currentQuestion = this.getQuestion();
+
     if (answer === currentQuestion.answer) {
-      this.correctAnswers++;
+      this.correctAnswers += 1;
     }
   }
 
-  // 6. hasEnded()
   hasEnded() {
-    if (this.currentQuestionIndex < this.questions.length) {
-      return false;
-    } else if (this.currentQuestionIndex === this.questions.length) {
-      return true;
-    }
+    return this.currentQuestionIndex === this.questions.length;
   }
-
-  // 7. filterQuestionsByDifficulty()
-  // filterQuestionsByDifficulty(difficulty) {
-  //   if (difficulty > 0 && difficulty < 4) {
-  //     //   return this.questions;
-  //     // } else {
-  //     const questionsByDifficulty = this.questions.filter((question) => {
-  //       if (question.difficulty === difficulty) {
-  //         return question;
-  //       }
-  //       this.questions = questionsByDifficulty;
-  //     });
-  //   }
-  // }
-
-  // //averageDifficulty
-  // averageDifficulty() {
-  //   this.questions.reduce((question) => {
-  //     if (question.difficulty === difficulty) {
-  //       return question;
-  //     }
-  //   });
-  // }
 
   filterQuestionsByDifficulty(difficulty) {
-    if (difficulty > 0 && difficulty < 4) {
-      let filteredQuestions = [];
+    if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
+      return;
+    }
 
-      for (let i = 0; i < this.questions.length; i++) {
-        if (this.questions[i].difficulty === difficulty) {
-          filteredQuestions.push(this.questions[i]);
-        }
-      }
-      this.questions = filteredQuestions;
-    }
+    this.questions = this.questions.filter((question) => {
+      return question.difficulty === difficulty;
+    });
   }
+
   averageDifficulty() {
-    let total = 0;
-    for (let i = 0; i < this.questions.length; i++) {
-      total += this.questions[i].difficulty;
+    if (this.questions.length === 0) {
+      return 0;
     }
-    return total / this.questions.length;
+
+    const totalDifficulty = this.questions.reduce((total, question) => {
+      return total + question.difficulty;
+    }, 0);
+
+    return totalDifficulty / this.questions.length;
   }
 }
